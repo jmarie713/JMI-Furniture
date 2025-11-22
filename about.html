@@ -1,0 +1,3145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - JMI Furniture</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d4b896;
+            --secondary-color: #8b7355;
+            --dark-color: #3e3e3e;
+            --light-color: #f8f5f2;
+            --accent-color: #a67c52;
+            --text-color: #333;
+            --border-color: #e0d6c8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            color: var(--dark-color);
+        }
+
+        .header-icons i:hover {
+            color: var(--accent-color);
+        }
+
+        .notification-container {
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -6px;
+            right: -4px;
+            background: linear-gradient(120deg, #ff9f7f, #c46d3b);
+            color: white;
+            border-radius: 999px;
+            min-width: 18px;
+            height: 18px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(196, 109, 59, 0.35);
+        }
+
+        .notification-dot.unread {
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(196, 109, 59, 0.4);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 12px rgba(196, 109, 59, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(196, 109, 59, 0);
+            }
+        }
+
+        .notification-panel {
+            position: absolute;
+            top: calc(100% + 1.25rem);
+            right: 0;
+            width: 450px;
+            max-width: 92vw;
+            background: var(--surface-strong);
+            border-radius: 18px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            display: none;
+            z-index: 1100;
+        }
+
+        .notification-panel.active {
+            display: block;
+        }
+
+        .notification-panel::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 18px;
+            width: 16px;
+            height: 16px;
+            background: var(--surface-strong);
+            border-left: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            transform: rotate(45deg);
+        }
+
+        .notification-panel-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .notification-panel-header h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .notification-panel-header p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--muted-color);
+        }
+
+        .notification-clear {
+            border: none;
+            background: transparent;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .notification-list {
+            max-height: 320px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.9rem;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(67, 48, 36, 0.08);
+        }
+
+        .notification-item-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .notification-item strong {
+            color: var(--secondary-color);
+        }
+
+        .notification-item small {
+            display: block;
+            color: var(--muted-color);
+            margin-top: 0.15rem;
+        }
+
+        .notification-item-title i {
+            color: var(--accent-color);
+        }
+
+        .notification-item-remove {
+            border: none;
+            background: transparent;
+            color: var(--muted-color);
+            cursor: pointer;
+            padding: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            min-width: 32px;
+            min-height: 32px;
+            flex-shrink: 0;
+        }
+
+        .notification-item-remove:hover {
+            color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .notification-item-remove:active {
+            transform: scale(0.95);
+        }
+
+        .notification-item-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .notification-copy {
+            margin: 0.2rem 0 0.4rem;
+            font-size: 0.82rem;
+            color: var(--muted-color);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(196, 109, 59, 0.12);
+            color: var(--accent-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--muted-color);
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .search-bar {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            margin-top: 0.5rem;
+        }
+
+        .search-bar.active {
+            display: block;
+        }
+
+        .search-bar input {
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            width: 250px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Toggle Menu */
+        .toggle-menu {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s ease;
+            z-index: 1002;
+            padding: 2.5rem;
+            overflow-y: auto;
+        }
+
+        .toggle-menu.active {
+            right: 0;
+        }
+
+        .toggle-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1001;
+            display: none;
+        }
+
+        .toggle-menu-overlay.active {
+            display: block;
+        }
+
+        .toggle-menu-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .toggle-menu-header h3 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .toggle-menu-close {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--dark-color);
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+        }
+
+        .toggle-menu-close:hover {
+            color: var(--accent-color);
+        }
+
+        .toggle-menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2.5rem 0;
+        }
+
+        .toggle-menu-links li {
+            margin-bottom: 1.2rem;
+        }
+
+        .toggle-menu-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: block;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .toggle-menu-links a:hover,
+        .toggle-menu-links a.active {
+            color: var(--accent-color);
+            padding-left: 1rem;
+            border-color: var(--accent-color);
+        }
+
+        /* About Hero Section */
+        .about-hero {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #e8d5c4 100%);
+        }
+
+        .about-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .about-hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+            line-height: 1.2;
+        }
+
+        .about-hero p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image .image-placeholder {
+    width: 100%;
+    height: 350px; /* you can adjust */
+    background-image: url('about.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px; /* optional */
+}
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Services Section */
+        .page-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            border: 1px solid var(--border-color);
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .service-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .service-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .service-read-more {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2a2a2a 100%);
+            color: white;
+            padding: 4rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 0.5rem;
+        }
+
+        .newsletter-form {
+            margin-top: 1rem;
+        }
+
+        .newsletter-form p {
+            margin-bottom: 1rem;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-input-group input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-input-group button {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .newsletter-input-group button:hover {
+            background: #e8d5c4;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s ease;
+            z-index: 1003;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-modal.active {
+            right: 0;
+        }
+
+        .cart-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1002;
+            display: none;
+        }
+
+        .cart-modal-overlay.active {
+            display: block;
+        }
+
+        .cart-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .cart-modal-header h3 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .cart-modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .cart-modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .cart-item-price {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cart-item-total {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .cart-total {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark-color);
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 115, 85, 0.3);
+        }
+
+        .checkout-btn.login-locked {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 420px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1004;
+            padding: 2.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        .login-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .login-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1003;
+            display: none;
+        }
+
+        .login-modal-overlay.active {
+            display: block;
+        }
+
+        .login-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .login-modal-header h3 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .login-modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .login-modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(166, 124, 82, 0.1);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .remember-me input {
+            margin-right: 0.8rem;
+        }
+
+        .remember-me label {
+            margin: 0;
+            font-weight: 400;
+            color: var(--text-color);
+        }
+
+        .login-links {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            font-size: 0.9rem;
+        }
+
+        .login-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .login-links a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1.2rem 1.8rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            border-left: 4px solid var(--accent-color);
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left-color: #28a745;
+        }
+
+        .notification.error {
+            border-left-color: #dc3545;
+        }
+
+        .notification i {
+            font-size: 1.3rem;
+        }
+
+        .notification.success i {
+            color: #28a745;
+        }
+
+        .notification.error i {
+            color: #dc3545;
+        }
+
+        .notification span {
+            font-weight: 500;
+        }
+
+        /* Registration Modal Styles */
+        #registration-modal,
+        #forgot-password-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 420px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1004;
+            padding: 2.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        #registration-modal.active,
+        #forgot-password-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #registration-overlay,
+        #forgot-password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1003;
+            display: none;
+        }
+
+        #registration-overlay.active,
+        #forgot-password-overlay.active {
+            display: block;
+        }
+
+        /* Receipt Modal Styles */
+        .receipt-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 500px;
+            max-width: 90vw;
+            max-height: 80vh;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1005;
+            transition: transform 0.4s ease;
+            overflow: hidden;
+        }
+
+        .receipt-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .receipt-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1004;
+            display: none;
+        }
+
+        .receipt-modal-overlay.active {
+            display: block;
+        }
+
+        .receipt-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            background: var(--light-color);
+        }
+
+        .receipt-header h3 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .receipt-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .receipt-close:hover {
+            color: var(--accent-color);
+        }
+
+        .receipt-body {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .receipt-info {
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .receipt-info p {
+            margin: 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        .receipt-items {
+            margin-bottom: 2rem;
+        }
+
+        .receipt-items h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .receipt-item:last-child {
+            border-bottom: none;
+        }
+
+        .receipt-totals {
+            border-top: 2px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .receipt-total-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .receipt-total-line.grand-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .receipt-thankyou {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1.5rem;
+        }
+
+        .receipt-thankyou p {
+            margin: 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        .receipt-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--light-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .about-hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cart-modal {
+                width: 100%;
+            }
+            
+            .login-modal {
+                width: 90%;
+                padding: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .toggle-menu {
+                width: 300px;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .about-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .about-hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .about-hero p {
+                font-size: 1rem;
+            }
+            
+            .search-bar input {
+                width: 200px;
+            }
+            
+            .btn-primary {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .toggle-menu {
+                width: 280px;
+                padding: 1.5rem;
+            }
+            
+            .login-links {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: center;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1.5rem; }
+        .mb-4 { margin-bottom: 1.5rem; }
+        .d-none { display: none; }
+        .d-flex { display: flex; }
+        .justify-content-between { justify-content: space-between; }
+        .align-items-center { align-items: center; }
+
+        /* Add to cart button disabled state */
+        .add-to-cart:disabled,
+        .add-to-cart-btn:disabled {
+            background: #cccccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .add-to-cart:disabled:hover,
+        .add-to-cart-btn:disabled:hover {
+            background: #cccccc !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Checkout button disabled state */
+        .checkout-btn:disabled {
+            background: #cccccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .checkout-btn:disabled:hover {
+            background: #cccccc !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Hover icon disabled state */
+        .hover-icon.disabled {
+            background: #cccccc !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .hover-icon.disabled:hover {
+            background: #cccccc !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Responsive design for modals */
+        @media (max-width: 576px) {
+            #registration-modal,
+            #forgot-password-modal,
+            .receipt-modal {
+                width: 95%;
+                padding: 1.5rem;
+            }
+            
+            .receipt-body {
+                padding: 1rem;
+            }
+            
+            .receipt-header,
+            .receipt-footer {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* ===== Modern UI Refresh · November 2025 ===== */
+        :root {
+            --primary-color: #f5dcc4;
+            --secondary-color: #2d1f15;
+            --dark-color: #1b120d;
+            --light-color: #fef9f4;
+            --accent-color: #c46d3b;
+            --text-color: #4a3d33;
+            --border-color: rgba(67, 48, 36, 0.15);
+            --muted-color: #9c8a7b;
+            --surface-color: rgba(255, 255, 255, 0.92);
+            --surface-strong: rgba(255, 255, 255, 0.97);
+            --glass-shadow: 0 25px 65px rgba(22, 12, 6, 0.18);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, rgba(255, 228, 205, 0.65), transparent 45%),
+                        radial-gradient(circle at 90% 10%, rgba(198, 109, 59, 0.15), transparent 35%),
+                        var(--light-color);
+            color: var(--text-color);
+        }
+
+        body::selection {
+            background: rgba(196, 109, 59, 0.2);
+        }
+
+        body::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 999px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(45, 31, 21, 0.08);
+        }
+
+        header .logo {
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            transform: scaleX(1);
+        }
+
+        .header-icons i {
+            color: var(--text-color);
+            background: rgba(244, 224, 208, 0.6);
+            padding: 0.35rem;
+            border-radius: 50%;
+        }
+
+        .cart-count {
+            background: linear-gradient(135deg, #ff9f7f, #c46d3b);
+            color: white;
+            box-shadow: 0 6px 18px rgba(196, 109, 59, 0.45);
+        }
+
+        .search-bar {
+            border: 1px solid var(--border-color);
+        }
+
+        .toggle-menu {
+            background: var(--surface-strong);
+            border-left: 1px solid var(--border-color);
+            backdrop-filter: blur(18px);
+        }
+
+        .toggle-menu-links a {
+            border: none;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .utility-strip {
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(245, 220, 196, 0.9));
+            border-bottom: 1px solid rgba(45, 31, 21, 0.08);
+        }
+
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .utility-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1rem;
+            background: var(--surface-color);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 30px rgba(43, 27, 17, 0.07);
+        }
+
+        .utility-item i {
+            font-size: 1.35rem;
+            color: var(--accent-color);
+            background: rgba(196, 109, 59, 0.12);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+        }
+
+        .utility-item p {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .utility-item small {
+            color: var(--muted-color);
+            display: block;
+            margin-top: -4px;
+            font-size: 0.8rem;
+        }
+
+        .about-hero,
+        .page-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(244, 208, 185, 0.85));
+            border-radius: 32px;
+            margin: 2rem auto;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .about-image .image-placeholder {
+            border-radius: 24px;
+            border: 2px solid rgba(196, 109, 59, 0.25);
+        }
+
+        .service-card,
+        .contact-form,
+        .info-item {
+            background: var(--surface-strong);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--glass-shadow);
+            border-radius: 22px;
+        }
+
+        .service-icon {
+            box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-size: clamp(2rem, 3vw, 3rem);
+        }
+
+        .btn-primary {
+            border-radius: 999px;
+            padding: 0.95rem 2.8rem;
+            background: linear-gradient(120deg, var(--secondary-color), var(--accent-color));
+            box-shadow: 0 12px 25px rgba(45, 31, 21, 0.35);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(45, 31, 21, 0.4);
+        }
+
+        footer {
+            border-top-left-radius: 32px;
+            border-top-right-radius: 32px;
+            padding-top: 5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .newsletter-input-group,
+        .newsletter-form input {
+            border-radius: 999px;
+        }
+
+        .cart-modal,
+        .login-modal,
+        .receipt-modal {
+            border-radius: 24px;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            border-color: rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(196, 109, 59, 0.15);
+        }
+
+        .receipt-modal {
+            width: 440px;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .receipt-content {
+            position: relative;
+        }
+
+        .receipt-close {
+            position: absolute;
+            top: 0.65rem;
+            right: 0.65rem;
+            background: transparent;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--muted-color);
+            cursor: pointer;
+        }
+
+        .receipt-close:hover {
+            color: var(--accent-color);
+        }
+
+        .receipt-paper {
+            padding: 2.4rem 2rem 2rem;
+            border-radius: 26px;
+            background: linear-gradient(180deg, #ffffff 0%, #fdf4ea 100%);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.25);
+            font-family: 'Space Mono', 'Courier New', monospace;
+            position: relative;
+        }
+
+        .receipt-paper::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 14px;
+            background-image: radial-gradient(circle at 8px -4px, transparent 10px, rgba(0, 0, 0, 0.15) 11px);
+            opacity: 0.35;
+        }
+
+        .receipt-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .receipt-line.dotted {
+            border-top: 1px dashed rgba(0, 0, 0, 0.25);
+            margin: 1rem 0;
+        }
+
+        .receipt-line.solid {
+            border-top: 1px solid rgba(0, 0, 0, 0.35);
+            margin: 1rem 0;
+        }
+
+        .receipt-items-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .receipt-items-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            font-size: 0.95rem;
+        }
+
+        .receipt-totals {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-size: 0.95rem;
+        }
+
+        .receipt-totals .grand {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .receipt-notes {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--muted-color);
+        }
+
+        .receipt-thanks {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+        }
+
+        .floating-help {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            background: linear-gradient(130deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            border-radius: 999px;
+            padding: 0.85rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 20px 40px rgba(21, 11, 6, 0.35);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1100;
+        }
+
+        .floating-help i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 991px) {
+            .utility-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .floating-help {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body id="page-top">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <div class="logo">JMI Furniture</div>
+                
+                <ul class="nav-links d-none d-lg-flex">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="header-icons">
+                    <div class="notification-container">
+                        <i class="bi bi-bell" id="notification-icon" title="Order updates"></i>
+                        <span class="notification-dot" id="notification-dot">0</span>
+                        <div class="notification-panel" id="notification-panel">
+                            <div class="notification-panel-header">
+                                <div>
+                                    <h4>Order Updates</h4>
+                                    <p>Your latest order activity</p>
+                                </div>
+                                <button class="notification-clear" id="notification-clear">Mark read</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <p class="empty-state">No orders yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="bi bi-person" id="user-icon"></i>
+                    <i class="bi bi-cart3" id="cart-icon"></i>
+                    <span class="cart-count">0</span>
+                    <i class="bi bi-list d-lg-none" id="mobile-menu-btn"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Experience Strip -->
+    <section class="utility-strip py-3">
+        <div class="container">
+            <div class="utility-grid">
+                <div class="utility-item">
+                    <i class="bi bi-truck"></i>
+                    <div>
+                        <p>Express Delivery</p>
+                        <small>Nationwide within 5 days</small>
+                    </div>
+                </div>
+                <div class="utility-item">
+                    <i class="bi bi-rulers"></i>
+                    <div>
+                        <p>Design Services</p>
+                        <small>In-house styling team</small>
+                    </div>
+                </div>
+                <div class="utility-item">
+                    <i class="bi bi-award"></i>
+                    <div>
+                        <p>Established Since 2005</p>
+                        <small>Family-owned workshop</small>
+                    </div>
+                </div>
+                <div class="utility-item">
+                    <i class="bi bi-headset"></i>
+                    <div>
+                        <p>Design Service</p>
+                        <small>Experts available 24/7</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toggle Menu -->
+    <div class="toggle-menu-overlay" id="toggle-menu-overlay"></div>
+    <div class="toggle-menu" id="toggle-menu">
+        <div class="toggle-menu-header">
+            <h3>Menu</h3>
+            <i class="bi bi-x toggle-menu-close" id="toggle-menu-close"></i>
+        </div>
+        <ul class="toggle-menu-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="about.html" class="nav-link active">About</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Welcome To Our Shop</h1>
+                    <h2>Making Your Home Feel Exceptional</h2>
+                    <p>JMI Furniture is dedicated to providing high-quality pieces that blend craftsmanship, comfort, and modern design. We aim to make your home not only functional but truly exceptional.</p>
+                    <p>With a wide selection of furniture for every room, we bring together elegant designs and reliable quality. Our team continuously works to ensure every customer finds something that suits their lifestyle.</p>
+                    <button class="btn-primary" id="read-more-btn">Read More</button>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-image">
+                        <div class="image-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-bag-check"></i>
+                        </div>
+                        <h3>Product Selling</h3>
+                        <p>LPremium quality and modern design made for your home.</p>
+                        <button class="btn-primary service-read-more">Read More</button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-palette"></i>
+                        </div>
+                        <h3>Product Designing</h3>
+                        <p>A modern piece designed with comfort, quality, and style in mind.</p>
+                        <button class="btn-primary service-read-more">Read More</button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <h3>24/7 Support</h3>
+                        <p>Available 24/7 to provide reliable assistance and ensure you get the help you need, anytime.</p>
+                        <button class="btn-primary service-read-more">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="bi bi-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="bi bi-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe For Latest Updates</p>
+                    <div class="newsletter-form">
+                        <div class="newsletter-input-group">
+                            <input type="email" placeholder="enter your email">
+                            <button>subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>JMI Furniture | All Rights Reserved!</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal-overlay" id="cart-modal-overlay"></div>
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-header">
+            <h3>Your Cart</h3>
+            <i class="bi bi-x cart-modal-close" id="cart-modal-close"></i>
+        </div>
+        
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be generated by JavaScript -->
+        </div>
+        
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cart-total-price">₱0.00</span>
+        </div>
+        
+        <button class="checkout-btn" id="checkout-btn">Checkout Cart</button>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal-overlay"></div>
+    <div class="login-modal" id="login-modal">
+        <div class="login-modal-header">
+            <h3>Login Form</h3>
+            <i class="bi bi-x login-modal-close" id="login-modal-close"></i>
+        </div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label>enter your email</label>
+                <input type="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label>enter your password</label>
+                <input type="password" class="form-control" required>
+            </div>
+            
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember Me</label>
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width: 100%;">Login Now</button>
+            
+            <div class="login-links">
+                <a href="#" id="forgot-password">Forget Password? Click Here</a>
+                <a href="#" id="create-account">Don't Have An Account? Create Now</a>
+            </div>
+        </form>
+    </div>
+
+    <a href="contact.html" class="floating-help">
+        <i class="bi bi-chat-dots"></i>
+        <span>Need help?</span>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample product data
+        const products = [
+            { id: 1, name: "MOffice Set", price: 18000, rating: 5, reviews: 50, category: "chair" },
+            { id: 2, name: "Comfortable Sofa", price: 21000, rating: 4, reviews: 32, category: "sofa" },
+            { id: 3, name: "Wooden Table", price: 6500, rating: 5, reviews: 45, category: "table" },
+            { id: 4, name: "Office Chair", price: 11000, rating: 4, reviews: 28, category: "chair" },
+            { id: 5, name: "Corner Table", price: 16000, rating: 5, reviews: 15, category: "corner" },
+            { id: 6, name: "New Wardrobe", price: 321000, rating: 4, reviews: 22, category: "wardrobe" },
+            { id: 7, name: "Flexible Chair", price: 10000, rating: 5, reviews: 38, category: "chair" },
+            { id: 8, name: "Dining Set", price: 20000, rating: 5, reviews: 19, category: "table" }
+        ];
+
+        const currencyFormatter = new Intl.NumberFormat('en-PH', {
+            style: 'currency',
+            currency: 'PHP',
+            minimumFractionDigits: 2
+        });
+
+        const formatCurrency = (value = 0) => currencyFormatter.format(Number(value) || 0);
+
+        // User data and cart data
+        let users = [];
+        let cart = [];
+        let isLoggedIn = false;
+        let currentUser = null;
+        let orderHistory = [];
+        let hasUnreadNotifications = false;
+        let currentSlide = 0;
+        let slideInterval;
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const toggleMenu = document.getElementById('toggle-menu');
+        const toggleMenuOverlay = document.getElementById('toggle-menu-overlay');
+        const toggleMenuClose = document.getElementById('toggle-menu-close');
+        const cartIcon = document.getElementById('cart-icon');
+        const cartModal = document.getElementById('cart-modal');
+        const cartModalOverlay = document.getElementById('cart-modal-overlay');
+        const cartModalClose = document.getElementById('cart-modal-close');
+        const userIcon = document.getElementById('user-icon');
+        const loginModal = document.getElementById('login-modal');
+        const loginModalOverlay = document.getElementById('login-modal-overlay');
+        const loginModalClose = document.getElementById('login-modal-close');
+        const loginForm = document.getElementById('login-form');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const cartCount = document.querySelector('.cart-count');
+        const slides = document.querySelector('.slides');
+        const sliderDots = document.querySelectorAll('.slider-dot');
+        const categoryItems = document.querySelectorAll('.category-list li');
+        const createAccountLink = document.getElementById('create-account');
+        const forgotPasswordLink = document.getElementById('forgot-password');
+        const notificationIcon = document.getElementById('notification-icon');
+        const notificationPanel = document.getElementById('notification-panel');
+        const notificationList = document.getElementById('notification-list');
+        const notificationDot = document.getElementById('notification-dot');
+        const notificationClear = document.getElementById('notification-clear');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Load users from localStorage
+            loadUsers();
+            
+            // Load cart from localStorage
+            loadCart();
+
+            // Load order notifications
+            loadOrderHistory();
+            
+            // Check login status
+            checkLoginStatus();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        // Load users from localStorage
+        function loadUsers() {
+            const savedUsers = localStorage.getItem('furnishme-users');
+            if (savedUsers) {
+                users = JSON.parse(savedUsers);
+            } else {
+                // Create a default user for testing
+                users = [
+                    {
+                        id: 1,
+                        email: 'demo@furnishme.com',
+                        password: 'password123',
+                        name: 'Demo User',
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                saveUsers();
+            }
+        }
+
+        // Save users to localStorage
+        function saveUsers() {
+            localStorage.setItem('furnishme-users', JSON.stringify(users));
+        }
+
+        // Cart functionality
+        function addToCart(productId) {
+            // Check if user is logged in
+            if (!isLoggedIn) {
+                showNotification('Please login first to add items to cart', 'error');
+                showLoginModal();
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showNotification(`${product.name} added to cart`, 'success');
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+            showNotification('Item removed from cart', 'error');
+        }
+
+        function updateCartQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (!item) return;
+            
+            item.quantity += change;
+            
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            // Update cart items display
+            if (cartItems) {
+                cartItems.innerHTML = '';
+                
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p class="text-center">Your cart is empty</p>';
+                } else {
+                    cart.forEach(item => {
+                        const itemTotal = item.price * item.quantity;
+                        
+                        const cartItem = document.createElement('div');
+                        cartItem.className = 'cart-item';
+                        cartItem.innerHTML = `
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <div class="cart-item-price">${formatCurrency(item.price)}</div>
+                                <div class="cart-item-quantity">
+                                    <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-total">${formatCurrency(itemTotal)}</div>
+                        `;
+                        cartItems.appendChild(cartItem);
+                    });
+                    
+                    // Add event listeners to quantity buttons
+                    const decreaseButtons = cartItems.querySelectorAll('.decrease-btn');
+                    const increaseButtons = cartItems.querySelectorAll('.increase-btn');
+                    
+                    decreaseButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = parseInt(this.getAttribute('data-id'));
+                            updateCartQuantity(productId, -1);
+                        });
+                    });
+                    
+                    increaseButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productId = parseInt(this.getAttribute('data-id'));
+                            updateCartQuantity(productId, 1);
+                        });
+                    });
+                }
+            }
+            
+            // Update cart total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            if (cartTotalPrice) {
+                cartTotalPrice.textContent = formatCurrency(total);
+            }
+            
+            // Update cart count
+            const itemCount = cart.reduce((count, item) => count + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = itemCount;
+                cartCount.style.display = itemCount > 0 ? 'flex' : 'none';
+            }
+            
+            // Save cart to localStorage
+            saveCart();
+        }
+
+        function loadCart() {
+            const savedCart = localStorage.getItem('furnishme-cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('furnishme-cart', JSON.stringify(cart));
+        }
+
+        function loadOrderHistory() {
+            const savedOrders = localStorage.getItem('furnishme-orders');
+            if (savedOrders) {
+                orderHistory = JSON.parse(savedOrders);
+            }
+            const unreadState = localStorage.getItem('furnishme-orders-unread');
+            if (unreadState) {
+                hasUnreadNotifications = JSON.parse(unreadState);
+            }
+            renderNotificationList();
+            updateNotificationBadge();
+        }
+
+        function saveOrderHistory() {
+            localStorage.setItem('furnishme-orders', JSON.stringify(orderHistory));
+        }
+
+        function saveUnreadState() {
+            localStorage.setItem('furnishme-orders-unread', JSON.stringify(hasUnreadNotifications));
+        }
+
+        function addOrderToHistory(receipt) {
+            const newOrder = {
+                orderId: receipt.orderId,
+                date: receipt.date,
+                time: receipt.time,
+                total: receipt.grandTotal,
+                placedAt: Date.now()
+            };
+
+            orderHistory = [newOrder, ...orderHistory].slice(0, 5);
+            hasUnreadNotifications = true;
+            saveOrderHistory();
+            saveUnreadState();
+            renderNotificationList();
+            updateNotificationBadge();
+        }
+
+        function removeOrderFromHistory(orderId) {
+            // Convert to string for comparison (data attributes are always strings)
+            const orderIdStr = String(orderId);
+            
+            // Remove order from history
+            orderHistory = orderHistory.filter(order => String(order.orderId) !== orderIdStr);
+            
+            // Save updated history
+            saveOrderHistory();
+            
+            // Update UI
+            renderNotificationList();
+            updateNotificationBadge();
+            
+            // Show confirmation
+            showNotification("Order removed from history", "success");
+        }
+
+        function getOrderStatusMeta(order) {
+            const steps = [
+                { label: 'Delivered', copy: 'Package received. Enjoy your refreshed space!', icon: 'bi-check-circle', threshold: 72 },
+                { label: 'Out for Delivery', copy: 'Riders are en route with your furniture.', icon: 'bi-truck', threshold: 48 },
+                { label: 'Quality Check', copy: 'Final inspection underway before dispatch.', icon: 'bi-shield-check', threshold: 24 },
+                { label: 'Preparing Order', copy: 'Our designers are assembling your pieces.', icon: 'bi-hammer', threshold: 0 }
+            ];
+
+            if (!order || !order.placedAt) return steps.at(-1);
+            const hoursSince = (Date.now() - order.placedAt) / (1000 * 60 * 60);
+            return steps.find(step => hoursSince >= step.threshold) || steps.at(-1);
+        }
+
+        function renderNotificationList() {
+            if (!notificationList) return;
+
+            if (!orderHistory.length) {
+                notificationList.innerHTML = '<p class="empty-state">No orders yet.</p>';
+                return;
+            }
+
+            notificationList.innerHTML = orderHistory.map(order => {
+                const status = getOrderStatusMeta(order);
+                return `
+                    <div class="notification-item" data-order-id="${order.orderId}">
+                        <div class="notification-item-content">
+                            <div style="flex: 1; min-width: 0;">
+                                <div class="notification-item-title">
+                                    <i class="bi ${status.icon}"></i>
+                                    <strong>Order #${order.orderId}</strong>
+                                    <span class="status-pill">${status.label}</span>
+                                </div>
+                                <p class="notification-copy">${status.copy}</p>
+                                <small>${order.date} • ${order.time}</small>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;">
+                                <strong style="white-space: nowrap;">${formatCurrency(order.total)}</strong>
+                                <button type="button" class="notification-item-remove" data-order-id="${order.orderId}" title="Remove order" aria-label="Remove order">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateNotificationBadge() {
+            if (!notificationDot) return;
+
+            const count = orderHistory.length;
+            if (count === 0 || !hasUnreadNotifications) {
+                notificationDot.style.display = 'none';
+                return;
+            }
+
+            notificationDot.style.display = 'flex';
+            notificationDot.textContent = count > 9 ? '9+' : count;
+            notificationDot.classList.add('unread');
+        }
+
+        function toggleNotificationPanel() {
+            if (!notificationPanel) return;
+            notificationPanel.classList.toggle('active');
+        }
+
+        function closeNotificationPanel() {
+            if (notificationPanel) {
+                notificationPanel.classList.remove('active');
+            }
+        }
+
+        function markNotificationsAsRead() {
+            hasUnreadNotifications = false;
+            saveUnreadState();
+            updateNotificationBadge();
+            closeNotificationPanel();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'error');
+                return;
+            }
+            
+            if (!isLoggedIn) {
+                showNotification('Please login to checkout', 'error');
+                showLoginModal();
+                return;
+            }
+            
+            // Generate receipt
+            const receipt = generateReceipt();
+            
+            // Show receipt in a modal
+            showReceiptModal(receipt);
+
+            // Save order notification
+            addOrderToHistory(receipt);
+            
+            // Clear cart after successful checkout
+            cart = [];
+            updateCart();
+        }
+
+        function generateReceipt() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = total * 0.08; // 8% tax
+            const grandTotal = total + tax;
+            const orderId = Math.floor(100000 + Math.random() * 900000);
+            
+            let receipt = {
+                orderId: orderId,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                items: cart.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    total: item.price * item.quantity
+                })),
+                subtotal: total,
+                tax: tax,
+                grandTotal: grandTotal,
+                customer: currentUser ? currentUser.name : 'Guest'
+            };
+            
+            return receipt;
+        }
+
+        function showReceiptModal(receipt) {
+            const receiptHTML = `
+                <div class="receipt-modal" id="receipt-modal">
+                    <div class="receipt-content">
+                        <button class="receipt-close" id="receipt-close" aria-label="Close receipt">
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <div class="receipt-paper">
+                            <div class="receipt-brand">
+                                <h3>JMI Furniture</h3>
+                                <p>Modern Living • Est. 2005</p>
+                                <span>www.jmifurniture.com</span>
+                            </div>
+                            <div class="receipt-line dotted"></div>
+                            <div class="receipt-meta">
+                                <div>
+                                    <p>Order #</p>
+                                    <strong>#${receipt.orderId}</strong>
+                                </div>
+                                <div>
+                                    <p>Date</p>
+                                    <strong>${receipt.date}</strong>
+                                </div>
+                                <div>
+                                    <p>Time</p>
+                                    <strong>${receipt.time}</strong>
+                                </div>
+                            </div>
+                            <div class="receipt-line solid"></div>
+                            <div class="receipt-customer">
+                                <p>Customer</p>
+                                <strong>${receipt.customer}</strong>
+                            </div>
+                            <div class="receipt-line dotted"></div>
+                            <ul class="receipt-items-list">
+                                ${receipt.items.map(item => `
+                                    <li>
+                                        <span>${item.name} x${item.quantity}</span>
+                                        <span>${formatCurrency(item.total)}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <div class="receipt-line solid"></div>
+                            <div class="receipt-totals">
+                                <div>
+                                    <span>Subtotal</span>
+                                    <strong>${formatCurrency(receipt.subtotal)}</strong>
+                                </div>
+                                <div>
+                                    <span>Tax (8%)</span>
+                                    <strong>${formatCurrency(receipt.tax)}</strong>
+                                </div>
+                                <div class="grand">
+                                    <span>Total Due</span>
+                                    <strong>${formatCurrency(receipt.grandTotal)}</strong>
+                                </div>
+                            </div>
+                            <div class="receipt-line dotted"></div>
+                            <div class="receipt-notes">
+                                <p>Payment: Cash on Delivery</p>
+                                <p>Please keep this slip for warranty service.</p>
+                            </div>
+                            <div class="receipt-thanks">
+                                <p>Maraming salamat!</p>
+                                <p>See you on your next purchase.</p>
+                            </div>
+                        </div>
+                        <div class="receipt-footer">
+                            <button class="btn-primary" id="receipt-ok-btn">Done</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="receipt-modal-overlay" id="receipt-modal-overlay"></div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', receiptHTML);
+
+            const receiptModal = document.getElementById('receipt-modal');
+            const receiptOverlay = document.getElementById('receipt-modal-overlay');
+
+            setTimeout(() => {
+                receiptModal.classList.add('active');
+                receiptOverlay.classList.add('active');
+            }, 100);
+
+            document.getElementById('receipt-close').addEventListener('click', closeReceiptModal);
+            document.getElementById('receipt-ok-btn').addEventListener('click', closeReceiptModal);
+            receiptOverlay.addEventListener('click', closeReceiptModal);
+
+            function closeReceiptModal() {
+                receiptModal.classList.remove('active');
+                receiptOverlay.classList.remove('active');
+                setTimeout(() => {
+                    receiptModal.remove();
+                    receiptOverlay.remove();
+                }, 300);
+            }
+        }
+
+        function legacyReceiptModal(receipt) {
+            // Create receipt modal HTML
+            const receiptHTML = `
+                <div class="receipt-modal" id="receipt-modal">
+                    <div class="receipt-content">
+                        <div class="receipt-header">
+                            <h3>Order Confirmation</h3>
+                            <i class="bi bi-x receipt-close" id="receipt-close"></i>
+                        </div>
+                        <div class="receipt-body">
+                            <div class="receipt-info">
+                                <p><strong>Order ID:</strong> #${receipt.orderId}</p>
+                                <p><strong>Date:</strong> ${receipt.date}</p>
+                                <p><strong>Time:</strong> ${receipt.time}</p>
+                                <p><strong>Customer:</strong> ${receipt.customer}</p>
+                            </div>
+                            <div class="receipt-items">
+                                <h4>Order Items:</h4>
+                                ${receipt.items.map(item => `
+                                    <div class="receipt-item">
+                                        <span>${item.name} x${item.quantity}</span>
+                                        <span>${formatCurrency(item.total)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="receipt-totals">
+                                <div class="receipt-total-line">
+                                    <span>Subtotal:</span>
+                                    <span>${formatCurrency(receipt.subtotal)}</span>
+                                </div>
+                                <div class="receipt-total-line">
+                                    <span>Shipping Fee (8%):</span>
+                                    <span>${formatCurrency(receipt.tax)}</span>
+                                </div>
+                                <div class="receipt-total-line grand-total">
+                                    <span>Total:</span>
+                                    <span>${formatCurrency(receipt.grandTotal)}</span>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <p>Payment Method: Cash on Delivery</p>
+                                <p>Please prepare the exact amount</p>
+                            </div>
+                            <div class="receipt-thankyou">
+                                <p>Thank you for your purchase!</p>
+                                <p>Your order will be processed shortly.</p>
+                            </div>
+                        </div>
+                        <div class="receipt-footer">
+                            <button class="btn-primary" id="receipt-ok-btn">OK</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="receipt-modal-overlay" id="receipt-modal-overlay"></div>
+            `;
+            
+            // Add receipt modal to page
+            document.body.insertAdjacentHTML('beforeend', receiptHTML);
+            
+            // Show receipt modal
+            const receiptModal = document.getElementById('receipt-modal');
+            const receiptOverlay = document.getElementById('receipt-modal-overlay');
+            
+            setTimeout(() => {
+                receiptModal.classList.add('active');
+                receiptOverlay.classList.add('active');
+            }, 100);
+            
+            // Add event listeners for receipt modal
+            document.getElementById('receipt-close').addEventListener('click', closeReceiptModal);
+            document.getElementById('receipt-ok-btn').addEventListener('click', closeReceiptModal);
+            receiptOverlay.addEventListener('click', closeReceiptModal);
+            
+            function closeReceiptModal() {
+                receiptModal.classList.remove('active');
+                receiptOverlay.classList.remove('active');
+                setTimeout(() => {
+                    receiptModal.remove();
+                    receiptOverlay.remove();
+                }, 300);
+            }
+        }
+
+        // User Registration and Login functionality
+        function showLoginModal() {
+            loginModal.classList.add('active');
+            loginModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function checkLoginStatus() {
+            const savedLogin = localStorage.getItem('furnishme-login');
+            const savedUser = localStorage.getItem('furnishme-current-user');
+            
+            if (savedLogin && savedUser) {
+                isLoggedIn = JSON.parse(savedLogin);
+                currentUser = JSON.parse(savedUser);
+                updateUserIcon();
+            }
+        }
+
+        function updateUserIcon() {
+            if (isLoggedIn && currentUser) {
+                userIcon.className = 'bi bi-box-arrow-right';
+                userIcon.title = `Logout (${currentUser.name})`;
+                enableCartFeatures();
+            } else {
+                userIcon.className = 'bi bi-person';
+                userIcon.title = 'Login';
+                disableCartFeatures();
+            }
+        }
+
+        function enableCartFeatures() {
+            // Enable all add to cart buttons
+            const addToCartButtons = document.querySelectorAll('.add-to-cart, .add-to-cart-btn');
+            addToCartButtons.forEach(button => {
+                button.disabled = false;
+                button.style.opacity = '1';
+                button.style.cursor = 'pointer';
+            });
+            
+            // Enable checkout button
+            if (checkoutBtn) {
+                checkoutBtn.classList.remove('login-locked');
+                checkoutBtn.removeAttribute('title');
+            }
+        }
+
+        function disableCartFeatures() {
+            // Disable all add to cart buttons
+            const addToCartButtons = document.querySelectorAll('.add-to-cart, .add-to-cart-btn');
+            addToCartButtons.forEach(button => {
+                button.disabled = true;
+                button.style.opacity = '0.6';
+                button.style.cursor = 'not-allowed';
+            });
+            
+            // Disable checkout button
+            if (checkoutBtn) {
+                checkoutBtn.classList.add('login-locked');
+                checkoutBtn.title = 'Login to checkout';
+            }
+        }
+
+        function login(email, password) {
+            // Find user by email
+            const user = users.find(u => u.email === email);
+            
+            if (!user) {
+                showNotification('User not found. Please check your email or register.', 'error');
+                return false;
+            }
+            
+            // Check password (in real app, this would be hashed)
+            if (user.password !== password) {
+                showNotification('Invalid password. Please try again.', 'error');
+                return false;
+            }
+            
+            // Login successful
+            isLoggedIn = true;
+            currentUser = user;
+            
+            // Save login state
+            localStorage.setItem('furnishme-login', JSON.stringify(isLoggedIn));
+            localStorage.setItem('furnishme-current-user', JSON.stringify(currentUser));
+            
+            updateUserIcon();
+            closeLoginModal();
+            showNotification(`Welcome back, ${user.name}!`, 'success');
+            
+            return true;
+        }
+
+        function register(name, email, password, confirmPassword) {
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Please fill in all fields', 'error');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters long', 'error');
+                return false;
+            }
+            
+            // Check if email already exists
+            if (users.find(u => u.email === email)) {
+                showNotification('Email already registered. Please login instead.', 'error');
+                return false;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: users.length + 1,
+                name: name,
+                email: email,
+                password: password, // In real app, this would be hashed
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            saveUsers();
+            
+            // Auto-login after registration
+            isLoggedIn = true;
+            currentUser = newUser;
+            
+            // Save login state
+            localStorage.setItem('furnishme-login', JSON.stringify(isLoggedIn));
+            localStorage.setItem('furnishme-current-user', JSON.stringify(currentUser));
+            
+            updateUserIcon();
+            closeLoginModal();
+            showNotification(`Account created successfully! Welcome, ${name}!`, 'success');
+            
+            return true;
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            currentUser = null;
+            
+            // Clear login state
+            localStorage.removeItem('furnishme-login');
+            localStorage.removeItem('furnishme-current-user');
+            
+            // Clear cart when logging out
+            cart = [];
+            updateCart();
+            
+            updateUserIcon();
+            showNotification('You have been logged out', 'error');
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            loginModalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Clear form
+            if (loginForm) {
+                loginForm.reset();
+            }
+        }
+
+        function showRegistrationModal() {
+            closeLoginModal();
+            
+            // Create registration modal
+            const registrationHTML = `
+                <div class="login-modal" id="registration-modal">
+                    <div class="login-modal-header">
+                        <h3>Create Account</h3>
+                        <i class="bi bi-x login-modal-close" id="registration-close"></i>
+                    </div>
+                    
+                    <form id="registration-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" id="reg-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" id="reg-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="reg-password" required minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" id="reg-confirm-password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%;">Create Account</button>
+                        
+                        <div class="login-links">
+                            <a href="#" id="back-to-login">Already have an account? Login here</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="login-modal-overlay" id="registration-overlay"></div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', registrationHTML);
+            
+            const registrationModal = document.getElementById('registration-modal');
+            const registrationOverlay = document.getElementById('registration-overlay');
+            
+            setTimeout(() => {
+                registrationModal.classList.add('active');
+                registrationOverlay.classList.add('active');
+            }, 100);
+            
+            // Add event listeners for registration modal
+            document.getElementById('registration-close').addEventListener('click', closeRegistrationModal);
+            document.getElementById('registration-overlay').addEventListener('click', closeRegistrationModal);
+            document.getElementById('back-to-login').addEventListener('click', function(e) {
+                e.preventDefault();
+                closeRegistrationModal();
+                showLoginModal();
+            });
+            
+            document.getElementById('registration-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('reg-name').value;
+                const email = document.getElementById('reg-email').value;
+                const password = document.getElementById('reg-password').value;
+                const confirmPassword = document.getElementById('reg-confirm-password').value;
+                
+                if (register(name, email, password, confirmPassword)) {
+                    closeRegistrationModal();
+                }
+            });
+            
+            function closeRegistrationModal() {
+                registrationModal.classList.remove('active');
+                registrationOverlay.classList.remove('active');
+                setTimeout(() => {
+                    registrationModal.remove();
+                    registrationOverlay.remove();
+                }, 300);
+            }
+        }
+
+        function showForgotPasswordModal() {
+            closeLoginModal();
+            
+            // Create forgot password modal
+            const forgotPasswordHTML = `
+                <div class="login-modal" id="forgot-password-modal">
+                    <div class="login-modal-header">
+                        <h3>Reset Password</h3>
+                        <i class="bi bi-x login-modal-close" id="forgot-password-close"></i>
+                    </div>
+                    
+                    <form id="forgot-password-form">
+                        <div class="form-group">
+                            <label>Enter your email address</label>
+                            <input type="email" class="form-control" id="reset-email" required>
+                        </div>
+                        
+                        <p style="margin-bottom: 1.5rem; color: var(--text-color); font-size: 0.9rem;">
+                            We'll send you a link to reset your password.
+                        </p>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%;">Send Reset Link</button>
+                        
+                        <div class="login-links">
+                            <a href="#" id="back-to-login-from-forgot">Back to Login</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="login-modal-overlay" id="forgot-password-overlay"></div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', forgotPasswordHTML);
+            
+            const forgotModal = document.getElementById('forgot-password-modal');
+            const forgotOverlay = document.getElementById('forgot-password-overlay');
+            
+            setTimeout(() => {
+                forgotModal.classList.add('active');
+                forgotOverlay.classList.add('active');
+            }, 100);
+            
+            // Add event listeners for forgot password modal
+            document.getElementById('forgot-password-close').addEventListener('click', closeForgotPasswordModal);
+            document.getElementById('forgot-password-overlay').addEventListener('click', closeForgotPasswordModal);
+            document.getElementById('back-to-login-from-forgot').addEventListener('click', function(e) {
+                e.preventDefault();
+                closeForgotPasswordModal();
+                showLoginModal();
+            });
+            
+            document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('reset-email').value;
+                
+                // Simulate sending reset email
+                showNotification(`Password reset link sent to ${email}`, 'success');
+                closeForgotPasswordModal();
+                showLoginModal();
+            });
+            
+            function closeForgotPasswordModal() {
+                forgotModal.classList.remove('active');
+                forgotOverlay.classList.remove('active');
+                setTimeout(() => {
+                    forgotModal.remove();
+                    forgotOverlay.remove();
+                }, 300);
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide and remove notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Event listeners setup
+        function setupEventListeners() {
+            // Mobile menu
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    toggleMenu.classList.add('active');
+                    toggleMenuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (toggleMenuClose) {
+                toggleMenuClose.addEventListener('click', function() {
+                    toggleMenu.classList.remove('active');
+                    toggleMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            if (toggleMenuOverlay) {
+                toggleMenuOverlay.addEventListener('click', function() {
+                    toggleMenu.classList.remove('active');
+                    toggleMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Cart functionality
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function() {
+                    if (!isLoggedIn) {
+                        showNotification('Please login first to view your cart', 'error');
+                        showLoginModal();
+                        return;
+                    }
+                    cartModal.classList.add('active');
+                    cartModalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (cartModalClose) {
+                cartModalClose.addEventListener('click', function() {
+                    cartModal.classList.remove('active');
+                    cartModalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            if (cartModalOverlay) {
+                cartModalOverlay.addEventListener('click', function() {
+                    cartModal.classList.remove('active');
+                    cartModalOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // User functionality
+            if (userIcon) {
+                userIcon.addEventListener('click', function() {
+                    if (isLoggedIn) {
+                        logout();
+                    } else {
+                        showLoginModal();
+                    }
+                });
+            }
+            
+            if (loginModalClose) {
+                loginModalClose.addEventListener('click', function() {
+                    closeLoginModal();
+                });
+            }
+            
+            if (loginModalOverlay) {
+                loginModalOverlay.addEventListener('click', function() {
+                    closeLoginModal();
+                });
+            }
+            
+            // Login form
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.querySelector('#login-form input[type="email"]').value;
+                    const password = document.querySelector('#login-form input[type="password"]').value;
+                    login(email, password);
+                });
+            }
+            
+            // Create account link
+            if (createAccountLink) {
+                createAccountLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showRegistrationModal();
+                });
+            }
+            
+            // Forgot password link
+            if (forgotPasswordLink) {
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showForgotPasswordModal();
+                });
+            }
+            
+            // Checkout button
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', function() {
+                    checkout();
+                });
+            }
+
+            // Notifications
+            if (notificationIcon) {
+                notificationIcon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleNotificationPanel();
+                });
+            }
+
+            if (notificationPanel) {
+                notificationPanel.addEventListener('click', function(e) {
+                    // Check for delete button clicks before stopping propagation
+                    const removeButton = e.target.closest(".notification-item-remove");
+                    if (removeButton) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const orderId = removeButton.getAttribute("data-order-id");
+                        if (orderId) {
+                            removeOrderFromHistory(orderId);
+                            return; // Don't continue with stopPropagation for panel
+                        }
+                    }
+                    e.stopPropagation();
+                });
+            }
+
+            // Event delegation for delete buttons in notification items
+            if (notificationList) {
+                notificationList.addEventListener('click', function(e) {
+                    // Check if clicked element is the button or icon inside it
+                    let removeButton = null;
+                    
+                    // Check if target is the button itself
+                    if (e.target.classList.contains("notification-item-remove")) {
+                        removeButton = e.target;
+                    }
+                    // Check if target is the icon inside the button
+                    else if (e.target.classList.contains("bi-trash") || e.target.tagName === "I") {
+                        removeButton = e.target.closest(".notification-item-remove");
+                    }
+                    // Fallback to closest
+                    else {
+                        removeButton = e.target.closest(".notification-item-remove");
+                    }
+                    
+                    if (removeButton) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const orderId = removeButton.getAttribute("data-order-id");
+                        if (orderId) {
+                            removeOrderFromHistory(orderId);
+                        }
+                    }
+                });
+            }
+
+            if (notificationClear) {
+                notificationClear.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    markNotificationsAsRead();
+                });
+            }
+            
+            // Close search bar when clicking outside
+            document.addEventListener('click', function(e) {
+                if (notificationPanel && notificationIcon && !notificationPanel.contains(e.target) && !notificationIcon.contains(e.target)) {
+                    closeNotificationPanel();
+                }
+            });
+            
+            // Read more buttons
+            const readMoreButtons = document.querySelectorAll('#read-more-btn, .service-read-more');
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    showNotification('Read more functionality would show more details here', 'success');
+                });
+            });
+            
+            // Newsletter form
+            const newsletterForms = document.querySelectorAll('.newsletter-form');
+            newsletterForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const input = this.querySelector('input[type="email"]');
+                    if (input.value) {
+                        showNotification('Thank you for subscribing to our newsletter!', 'success');
+                        input.value = '';
+                    }
+                });
+            });
+        }
+
+        // Handle page navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update active navigation links
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
